@@ -20,7 +20,12 @@ def show_products():
     products = cursor.fetchall()
 
     for product in products:
-        print(product)
+        print(
+            f"ID: {product[0]} | "
+            f"Name: {product[1]} | "
+            f"Price: €{product[2]} | "
+            f"Stock: {product[3]}"
+        )
 
     conn.close()
 
