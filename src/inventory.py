@@ -30,5 +30,33 @@ def show_products():
     conn.close()
 
 
+def show_low_stock():
+    conn = get_connection()
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM LowStockAlerts
+    """)
+
+    rows = cursor.fetchall()
+
+    print("\n=== LOW STOCK ALERTS ===")
+
+    for row in rows:
+        print(f"⚠️  {row[1]}")
+        print(f"   Current Stock : {row[2]}")
+        print(f"   Reorder Level : {row[3]}")
+        print(f"   Supplier      : {row[4]}")
+        print(f"   Contact       : {row[5]}")
+        print(f"   Phone         : {row[6]}")
+        print(f"   Email         : {row[7]}")
+        print()
+
+    conn.close()
+
+
 if __name__ == "__main__":
-    show_products()
+    # show_products()
+    show_low_stock()
