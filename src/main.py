@@ -1,0 +1,27 @@
+from inventory import show_products, show_low_stock
+from sales import sell_product
+
+while True:
+
+    print("\nRetail Inventory Manager")
+    print("1. Show Products")
+    print("2. Sell Product")
+    print("3. Low Stock Alerts")
+    print("4. Exit")
+
+    choice = input("Choice: ")
+
+    if choice == "1":
+        show_products()
+
+    elif choice == "2":
+        product_id = int(input("Product ID: "))
+        quantity = int(input("Quantity: "))
+
+        sell_product(product_id, quantity)
+
+    elif choice == "3":
+        show_low_stock()
+
+    elif choice == "4":
+        break
