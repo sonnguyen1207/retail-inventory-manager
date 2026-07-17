@@ -88,4 +88,37 @@ def return_product(product_id, quantity):
 
     conn.close()
 
+
+def sales_report():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT SaleID,
+               ProductID,
+               Quantity,
+               TotalAmount,
+               SaleDate
+        FROM Sales
+        ORDER BY SaleDate DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    print("\n=== SALES REPORT ===\n")
+
+    for row in rows:
+        print(
+            f"Sale #{row[0]} | "
+            f"Product {row[1]} | "
+            f"Qty {row[2]} | "
+            f"€{row[3]} | "
+            f"{row[4]}"
+        )
+
+    conn.close()
+
+
 # sell_product(2, 1)
+sales_report()
