@@ -58,4 +58,34 @@ def sell_product(product_id, quantity):
     conn.close()
 
 
+def return_product(product_id, quantity):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT ProductName
+        FROM Products
+        WHERE ProductID = ?
+    """, (product_id,))
+
+    product = cursor.fetchone()
+
+    if not product:
+        print("Product not found.")
+        conn.close()
+        return
+
+    cursor.execute("""
+        UPDATE Products
+        SET StockQuantity = StockQuantity + ?
+        WHERE ProductID = ?
+    """, (quantity, product_id))
+
+    conn.commit()
+
+    print(f"{quantity} units returned.")
+
+    conn.close()
+
 # sell_product(2, 1)
