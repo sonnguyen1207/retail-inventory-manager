@@ -1,5 +1,5 @@
 from inventory import show_products, show_low_stock, add_product
-from sales import sell_product, return_product, sales_report
+from sales import sell_product, return_product, sales_report, revenue_report
 
 while True:
 
@@ -11,6 +11,7 @@ while True:
     print("4. Add Product")
     print("5. Return Product")
     print("6. Sales Report")
+    print("7. Revenue Report")
 
     choice = input("Choice: ")
     if choice == "0":
@@ -36,3 +37,5 @@ while True:
         return_product(product_id, quantity)
     elif choice == "6":
         sales_report()
+    elif choice == "7":
+        revenue_report()

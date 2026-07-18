@@ -120,5 +120,27 @@ def sales_report():
     conn.close()
 
 
+def revenue_report():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT SUM(TotalAmount)
+        FROM Sales
+    """)
+
+    total = cursor.fetchone()[0]
+
+    if total is None:
+        total = 0
+
+    print("\n=== REVENUE REPORT ===")
+    print(f"Total Revenue: €{total:.2f}")
+
+    conn.close()
+
+
 # sell_product(2, 1)
-sales_report()
+# sales_report()
+revenue_report()
