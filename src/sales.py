@@ -120,27 +120,54 @@ def sales_report():
     conn.close()
 
 
-def revenue_report():
+# def revenue_report():
 
+#     conn = get_connection()
+#     cursor = conn.cursor()
+
+#     cursor.execute("""
+#         SELECT SUM(TotalAmount)
+#         FROM Sales
+#     """)
+
+#     total = cursor.fetchone()[0]
+
+#     if total is None:
+#         total = 0
+
+#     print("\n=== REVENUE REPORT ===")
+#     print(f"Total Revenue: €{total:.2f}")
+
+#     conn.close()
+
+def revenue_report():
     conn = get_connection()
     cursor = conn.cursor()
-
     cursor.execute("""
-        SELECT SUM(TotalAmount)
-        FROM Sales
-    """)
+                    SELECT
+                        p.ProductName,
+                        SUM(s.Quantity) AS UnitsSold,
+                        SUM(s.TotalAmount) AS Revenue
+                    FROM Sales s
+                    JOIN Products p
+                    ON s.ProductID = p.ProductID
+                    GROUP BY p.ProductName
+                    ORDER BY Revenue DESC
+                    """)
 
-    total = cursor.fetchone()[0]
+    rows = cursor.fetchall()
 
-    if total is None:
-        total = 0
+    print("\n=== PRODUCT REVENUE REPORT ===\n")
 
-    print("\n=== REVENUE REPORT ===")
-    print(f"Total Revenue: €{total:.2f}")
+    for product_name, units_sold, revenue in rows:
+        print(f"Product : {product_name}")
+        print(f"Units   : {units_sold}")
+        print(f"Revenue : €{float(revenue):.2f}")
+        print("-" * 30)
 
     conn.close()
 
 
 # sell_product(2, 1)
 # sales_report()
-revenue_report()
+# revenue_report()
